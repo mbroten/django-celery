@@ -53,7 +53,7 @@ class TaskMeta(models.Model):
 
 class TaskSetMeta(models.Model):
     """TaskSet result"""
-    taskset_id = models.CharField(_(u"group id"), max_length=255, unique=True)
+    taskset_id = models.CharField(_(u"group id"), max_length=191, unique=True)
     result = PickledObjectField()
     date_done = models.DateTimeField(_(u"created at"), auto_now=True)
     hidden = models.BooleanField(editable=False, default=False, db_index=True)
@@ -265,7 +265,7 @@ signals.pre_save.connect(PeriodicTasks.changed, sender=PeriodicTask)
 
 
 class WorkerState(models.Model):
-    hostname = models.CharField(_(u"hostname"), max_length=255, unique=True)
+    hostname = models.CharField(_(u"hostname"), max_length=191, unique=True)
     last_heartbeat = models.DateTimeField(_(u"last heartbeat"), null=True,
                                           db_index=True)
 
@@ -301,7 +301,7 @@ class TaskState(models.Model):
     task_id = models.CharField(_(u"UUID"),
                 max_length=36, unique=True)
     name = models.CharField(_(u"name"),
-                max_length=200, null=True, db_index=True)
+                max_length=191, null=True, db_index=True)
     tstamp = models.DateTimeField(_(u"event received at"), db_index=True)
     args = models.TextField(_(u"Arguments"), null=True)
     kwargs = models.TextField(_(u"Keyword arguments"), null=True)
