@@ -22,7 +22,7 @@ TASK_STATE_CHOICES = zip(states.ALL_STATES, states.ALL_STATES)
 
 class TaskMeta(models.Model):
     """Task result/status."""
-    task_id = models.CharField(_(u"task id"), max_length=255, unique=True)
+    task_id = models.CharField(_(u"task id"), max_length=191, unique=True)
     status = models.CharField(_(u"state"), max_length=50,
             default=states.PENDING, choices=TASK_STATE_CHOICES)
     result = PickledObjectField(null=True, default=None, editable=False)
