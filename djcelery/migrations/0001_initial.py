@@ -11,7 +11,7 @@ class Migration(SchemaMigration):
         # Adding model 'TaskMeta'
         db.create_table('celery_taskmeta', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('task_id', self.gf('django.db.models.fields.CharField')(unique=True, max_length=255)),
+            ('task_id', self.gf('django.db.models.fields.CharField')(unique=True, max_length=191)),
             ('status', self.gf('django.db.models.fields.CharField')(default='PENDING', max_length=50)),
             ('result', self.gf('picklefield.fields.PickledObjectField')(default=None, null=True)),
             ('date_done', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
@@ -22,7 +22,7 @@ class Migration(SchemaMigration):
         # Adding model 'TaskSetMeta'
         db.create_table('celery_tasksetmeta', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('taskset_id', self.gf('django.db.models.fields.CharField')(unique=True, max_length=255)),
+            ('taskset_id', self.gf('django.db.models.fields.CharField')(unique=True, max_length=191)),
             ('result', self.gf('picklefield.fields.PickledObjectField')()),
             ('date_done', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
         ))
@@ -55,7 +55,7 @@ class Migration(SchemaMigration):
         # Adding model 'PeriodicTask'
         db.create_table('djcelery_periodictask', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(unique=True, max_length=200)),
+            ('name', self.gf('django.db.models.fields.CharField')(unique=True, max_length=191)),
             ('task', self.gf('django.db.models.fields.CharField')(max_length=200)),
             ('interval', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['djcelery.IntervalSchedule'], null=True, blank=True)),
             ('crontab', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['djcelery.CrontabSchedule'], null=True, blank=True)),
@@ -75,7 +75,7 @@ class Migration(SchemaMigration):
         # Adding model 'WorkerState'
         db.create_table('djcelery_workerstate', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('hostname', self.gf('django.db.models.fields.CharField')(unique=True, max_length=255)),
+            ('hostname', self.gf('django.db.models.fields.CharField')(unique=True, max_length=191)),
             ('last_heartbeat', self.gf('django.db.models.fields.DateTimeField')(null=True, db_index=True)),
         ))
         db.send_create_signal('djcelery', ['WorkerState'])
@@ -85,7 +85,7 @@ class Migration(SchemaMigration):
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('state', self.gf('django.db.models.fields.CharField')(max_length=64, db_index=True)),
             ('task_id', self.gf('django.db.models.fields.CharField')(unique=True, max_length=36)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=200, null=True, db_index=True)),
+            ('name', self.gf('django.db.models.fields.CharField')(max_length=191, null=True, db_index=True)),
             ('tstamp', self.gf('django.db.models.fields.DateTimeField')(db_index=True)),
             ('args', self.gf('django.db.models.fields.TextField')(null=True)),
             ('kwargs', self.gf('django.db.models.fields.TextField')(null=True)),
@@ -168,7 +168,7 @@ class Migration(SchemaMigration):
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'result': ('picklefield.fields.PickledObjectField', [], {'default': 'None', 'null': 'True'}),
             'status': ('django.db.models.fields.CharField', [], {'default': "'PENDING'", 'max_length': '50'}),
-            'task_id': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '255'}),
+            'task_id': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '191'}),
             'traceback': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'})
         },
         'djcelery.tasksetmeta': {
@@ -176,7 +176,7 @@ class Migration(SchemaMigration):
             'date_done': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'result': ('picklefield.fields.PickledObjectField', [], {}),
-            'taskset_id': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '255'})
+            'taskset_id': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '191'})
         },
         'djcelery.taskstate': {
             'Meta': {'ordering': "['-tstamp']", 'object_name': 'TaskState'},
@@ -186,7 +186,7 @@ class Migration(SchemaMigration):
             'hidden': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'db_index': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'kwargs': ('django.db.models.fields.TextField', [], {'null': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'db_index': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '191', 'null': 'True', 'db_index': 'True'}),
             'result': ('django.db.models.fields.TextField', [], {'null': 'True'}),
             'retries': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
             'runtime': ('django.db.models.fields.FloatField', [], {'null': 'True'}),
@@ -198,7 +198,7 @@ class Migration(SchemaMigration):
         },
         'djcelery.workerstate': {
             'Meta': {'ordering': "['-last_heartbeat']", 'object_name': 'WorkerState'},
-            'hostname': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '255'}),
+            'hostname': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '191'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'last_heartbeat': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'db_index': 'True'})
         }
